@@ -168,10 +168,9 @@ int main(void) {
     snprintf(cmd, sizeof(cmd), "mount %s /mnt/exherbo/boot", p1);
     execute_cmd_abort(cmd, "Failed to mount EFI partition");
 
-    printf("Fetching dynamic Exherbo stage URL...\n");
-    const char *stage_file = "exherbo-x86_64-pc-linux-gnu-current.tar.xz";
-
-    snprintf(cmd, sizeof(cmd), "curl -fSLO https://stages.exherbo.org/x86_64-pc-linux-gnu/%s", stage_file);
+    printf("Fetching Exherbo stage URL...\n");
+    const char *stage_file = "exherbo-x86_64-pc-linux-gnu-gcc-20230726.tar.xz";
+    snprintf(cmd, sizeof(cmd), "curl -fSLO https://stages.exherbo.org/x86_64-pc-linux-gnu%%2F%s", stage_file);
     execute_cmd_abort(cmd, "Failed to download Exherbo stage");
 
     printf("Unpacking Stage...\n");
