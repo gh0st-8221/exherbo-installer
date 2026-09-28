@@ -170,7 +170,7 @@ int main(void) {
 
     printf("Fetching Exherbo stage URL...\n");
     const char *stage_file = "exherbo-x86_64-pc-linux-gnu-gcc-20230726.tar.xz";
-    snprintf(cmd, sizeof(cmd), "curl -fSLO https://stages.exherbo.org/x86_64-pc-linux-gnu%%2F%s", stage_file);
+    snprintf(cmd, sizeof(cmd), "curl -fSL https://stages.exherbo.org/x86_64-pc-linux-gnu%%2F%s -o %s", stage_file, stage_file);
     execute_cmd_abort(cmd, "Failed to download Exherbo stage");
 
     printf("Unpacking Stage...\n");
