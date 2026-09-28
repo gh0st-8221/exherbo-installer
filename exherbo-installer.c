@@ -56,15 +56,15 @@ void ensure_network(void) {
         if (choice[0] == 'y' || choice[0] == 'Y') {
             setup_wifi();
             if (!check_internet()) {
-                printf("Failed to connect to internet. Fuck off\n");
+                printf("Failed to connect to internet. Exiting...\n");
                 exit(1);
             }
         } else {
-            printf("Fuck off\n");
+            printf("Exiting...\n");
             exit(1);
         }
     } else {
-        printf("Fuck off\n");
+        printf("Exiting...\n");
         exit(1);
     }
 }
@@ -169,22 +169,7 @@ int main(void) {
     execute_cmd_abort(cmd, "Failed to mount EFI partition");
 
     printf("Fetching dynamic Exherbo stage URL...\n");
-    FILE *pipe = popen("curl -s https://stages.exherbo.org/x86_64-pc-linux-gnu/ | grep -o 'exherbo-x86_64-pc-linux-gnu-gcc-[0-9]*\\.tar\\.xz' | sort | tail -n 1", "r");
-    char stage_file[256] = {0};
-    if (pipe) {
-        fgets(stage_file, sizeof(stage_file), pipe);
-        pclose(pipe);
-    }
-    
-    size_t len = strlen(stage_file);
-    if (len > 0 && stage_file[len-1] == '\n') {
-        stage_file[len-1] = '\0';
-    }
-
-    if (strlen(stage_file) == 0) {
-        printf("FATAL ERROR: Failed to parse Exherbo stage filename.\n");
-        exit(1);
-    }
+    const char *stage_file = "exherbo-x86_64-pc-linux-gnu-current.tar.xz";
 
     snprintf(cmd, sizeof(cmd), "curl -fSLO https://stages.exherbo.org/x86_64-pc-linux-gnu/%s", stage_file);
     execute_cmd_abort(cmd, "Failed to download Exherbo stage");
